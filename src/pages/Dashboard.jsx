@@ -75,17 +75,17 @@ const Dashboard = () => {
           <h3 className="text-sm font-medium text-gray-600 dark:text-gray-300 mb-4">
             Spending by Category
           </h3>
-          <ResponsiveContainer width="100%" height={220}>
-            <PieChart>
-              <Pie
-                data={spendingByCategory}
-                cx="50%"
-                cy="50%"
-                innerRadius={60}
-                outerRadius={90}
-                paddingAngle={3}
-                dataKey="value"
-              >
+          <ResponsiveContainer width="100%" height={260}>
+  <PieChart>
+    <Pie
+      data={spendingByCategory}
+      cx="50%"
+      cy="45%"
+      innerRadius={50}
+      outerRadius={75}
+      paddingAngle={3}
+      dataKey="value"
+    >
                 {spendingByCategory.map((entry, index) => (
                   <Cell
                     key={`cell-${index}`}

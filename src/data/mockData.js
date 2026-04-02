@@ -30,3 +30,10 @@ export const spendingByCategory = [
   { name: "Shopping", value: 3200 },
   { name: "Health", value: 1500 },
 ];
+export const fetchTransactions = () => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve(transactions);
+    }, 500);
+  });
+};

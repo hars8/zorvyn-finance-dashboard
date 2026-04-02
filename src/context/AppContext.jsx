@@ -1,14 +1,56 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState, useEffect } from "react";
 import { transactions as initialTransactions } from "../data/mockData";
 
 const AppContext = createContext();
 
+const fetchTransactions = () => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve(initialTransactions);
+    }, 500);
+  });
+};
+
 export const AppProvider = ({ children }) => {
-  const [transactions, setTransactions] = useState(initialTransactions);
-  const [role, setRole] = useState("admin");
-  const [darkMode, setDarkMode] = useState(false);
+  const [transactions, setTransactions] = useState(() => {
+    const saved = localStorage.getItem("transactions");
+    return saved ? JSON.parse(saved) : initialTransactions;
+  });
+
+  const [role, setRole] = useState(() => {
+    return localStorage.getItem("role") || "admin";
+  });
+
+  const [darkMode, setDarkMode] = useState(() => {
+    return localStorage.getItem("darkMode") === "true";
+  });
+
   const [filter, setFilter] = useState("all");
   const [search, setSearch] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    const saved = localStorage.getItem("transactions");
+    if (!saved) {
+      setLoading(true);
+      fetchTransactions().then((data) => {
+        setTransactions(data);
+        setLoading(false);
+      });
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("transactions", JSON.stringify(transactions));
+  }, [transactions]);
+
+  useEffect(() => {
+    localStorage.setItem("role", role);
+  }, [role]);
+
+  useEffect(() => {
+    localStorage.setItem("darkMode", darkMode);
+  }, [darkMode]);
 
   const addTransaction = (transaction) => {
     setTransactions([
@@ -44,6 +86,7 @@ export const AppProvider = ({ children }) => {
         totalIncome,
         totalExpense,
         totalBalance,
+        loading,
       }}
     >
       <div className={darkMode ? "dark" : ""}>

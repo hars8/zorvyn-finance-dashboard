@@ -26,6 +26,21 @@ const Transactions = () => {
     setShowForm(false);
   };
 
+  const exportCSV = () => {
+    const headers = ["Name,Amount,Type,Category,Date"];
+    const rows = transactions.map(
+      (t) => `${t.name},${t.amount},${t.type},${t.category},${t.date}`
+    );
+    const csv = [...headers, ...rows].join("\n");
+    const blob = new Blob([csv], { type: "text/csv" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "transactions.csv";
+    a.click();
+    URL.revokeObjectURL(url);
+  };
+
   const filtered = transactions
     .filter((t) => {
       if (filter === "income") return t.type === "income";
@@ -55,14 +70,22 @@ const Transactions = () => {
             Manage and explore your transactions
           </p>
         </div>
-        {role === "admin" && (
+        <div className="flex items-center gap-2">
           <button
-            onClick={() => setShowForm(!showForm)}
-            className="bg-blue-500 hover:bg-blue-600 text-white text-sm px-4 py-2 rounded-lg transition-all"
+            onClick={exportCSV}
+            className="bg-green-500 hover:bg-green-600 text-white text-sm px-4 py-2 rounded-lg transition-all"
           >
-            + Add Transaction
+            📥 Export CSV
           </button>
-        )}
+          {role === "admin" && (
+            <button
+              onClick={() => setShowForm(!showForm)}
+              className="bg-blue-500 hover:bg-blue-600 text-white text-sm px-4 py-2 rounded-lg transition-all"
+            >
+              + Add Transaction
+            </button>
+          )}
+        </div>
       </div>
 
       {/* Add Transaction Form — Admin Only */}
