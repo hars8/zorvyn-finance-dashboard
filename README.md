@@ -20,7 +20,7 @@ If you are developing a production application, we recommend using TypeScript wi
 A clean and interactive Finance Dashboard built for the Zorvyn Fintech Frontend Developer assignment.
 
 ## Live Demo
-[Add your Vercel link here after deployment]
+https://zorvyn-finance-dashboard-sepia.vercel.app
 
 ## Features
 - Dashboard with summary cards, bar chart and pie chart

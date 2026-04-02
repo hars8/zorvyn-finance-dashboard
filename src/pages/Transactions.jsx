@@ -2,9 +2,10 @@ import { useState } from "react";
 import { useApp } from "../context/AppContext";
 
 const Transactions = () => {
-  const { transactions, role, addTransaction, filter, setFilter, search, setSearch } = useApp();
+  const { transactions, setTransactions, role, addTransaction, filter, setFilter, search, setSearch } = useApp();
   const [sortBy, setSortBy] = useState("date");
   const [showForm, setShowForm] = useState(false);
+  const [editingTransaction, setEditingTransaction] = useState(null);
   const [newTransaction, setNewTransaction] = useState({
     name: "",
     amount: "",
@@ -24,6 +25,29 @@ const Transactions = () => {
     });
     setNewTransaction({ name: "", amount: "", type: "expense", category: "", date: "" });
     setShowForm(false);
+  };
+
+  const handleEdit = (txn) => {
+    setEditingTransaction({ ...txn });
+  };
+
+  const handleSaveEdit = () => {
+    if (!editingTransaction.name || !editingTransaction.amount || !editingTransaction.date || !editingTransaction.category) {
+      alert("Please fill all fields!");
+      return;
+    }
+    setTransactions(
+      transactions.map((t) =>
+        t.id === editingTransaction.id
+          ? { ...editingTransaction, amount: parseFloat(editingTransaction.amount) }
+          : t
+      )
+    );
+    setEditingTransaction(null);
+  };
+
+  const handleCancelEdit = () => {
+    setEditingTransaction(null);
   };
 
   const exportCSV = () => {
@@ -140,6 +164,66 @@ const Transactions = () => {
         </div>
       )}
 
+      {/* Edit Transaction Form — Admin Only */}
+      {editingTransaction && role === "admin" && (
+        <div className="bg-white dark:bg-gray-800 rounded-xl p-5 border border-blue-200 dark:border-blue-700 mb-6">
+          <h3 className="text-sm font-medium text-blue-600 dark:text-blue-300 mb-4">
+            ✏️ Edit Transaction
+          </h3>
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+            <input
+              type="text"
+              placeholder="Name"
+              value={editingTransaction.name}
+              onChange={(e) => setEditingTransaction({ ...editingTransaction, name: e.target.value })}
+              className="text-sm px-3 py-2 rounded-lg border border-gray-200 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 text-gray-700 dark:text-gray-200"
+            />
+            <input
+              type="number"
+              placeholder="Amount"
+              value={editingTransaction.amount}
+              onChange={(e) => setEditingTransaction({ ...editingTransaction, amount: e.target.value })}
+              className="text-sm px-3 py-2 rounded-lg border border-gray-200 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 text-gray-700 dark:text-gray-200"
+            />
+            <input
+              type="text"
+              placeholder="Category"
+              value={editingTransaction.category}
+              onChange={(e) => setEditingTransaction({ ...editingTransaction, category: e.target.value })}
+              className="text-sm px-3 py-2 rounded-lg border border-gray-200 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 text-gray-700 dark:text-gray-200"
+            />
+            <input
+              type="date"
+              value={editingTransaction.date}
+              onChange={(e) => setEditingTransaction({ ...editingTransaction, date: e.target.value })}
+              className="text-sm px-3 py-2 rounded-lg border border-gray-200 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 text-gray-700 dark:text-gray-200"
+            />
+            <select
+              value={editingTransaction.type}
+              onChange={(e) => setEditingTransaction({ ...editingTransaction, type: e.target.value })}
+              className="text-sm px-3 py-2 rounded-lg border border-gray-200 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 text-gray-700 dark:text-gray-200"
+            >
+              <option value="expense">Expense</option>
+              <option value="income">Income</option>
+            </select>
+            <div className="flex gap-2">
+              <button
+                onClick={handleSaveEdit}
+                className="flex-1 bg-blue-500 hover:bg-blue-600 text-white text-sm px-4 py-2 rounded-lg transition-all"
+              >
+                Save
+              </button>
+              <button
+                onClick={handleCancelEdit}
+                className="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-700 text-sm px-4 py-2 rounded-lg transition-all"
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Search Filter Sort */}
       <div className="bg-white dark:bg-gray-800 rounded-xl p-4 border border-gray-100 dark:border-gray-700 mb-4 flex flex-wrap gap-3">
         <input
@@ -208,6 +292,14 @@ const Transactions = () => {
                 }`}>
                   {txn.type === "income" ? "+" : "-"}₹{txn.amount.toLocaleString()}
                 </span>
+                {role === "admin" && (
+                  <button
+                    onClick={() => handleEdit(txn)}
+                    className="text-xs bg-blue-50 hover:bg-blue-100 text-blue-500 px-3 py-1 rounded-lg transition-all"
+                  >
+                    ✏️ Edit
+                  </button>
+                )}
               </div>
             </div>
           ))
