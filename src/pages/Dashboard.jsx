@@ -13,8 +13,7 @@ const Dashboard = () => {
   const recentTransactions = transactions.slice(0, 5);
 
   return (
-    <div className="dark:text-white">
-
+    <div className="dark:text-white page-transition">
       {/* Page Title */}
       <div className="mb-6">
         <h2 className="text-2xl font-semibold text-gray-800 dark:text-white">

@@ -29,8 +29,7 @@ const Insights = () => {
   const expenseTransactions = transactions.filter((t) => t.type === "expense").length;
 
   return (
-    <div className="dark:text-white">
-
+    <div className="dark:text-white page-transition">
       {/* Header */}
       <div className="mb-6">
         <h2 className="text-2xl font-semibold text-gray-800 dark:text-white">

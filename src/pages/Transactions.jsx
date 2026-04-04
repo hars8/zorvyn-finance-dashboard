@@ -82,7 +82,7 @@ const Transactions = () => {
     });
 
   return (
-    <div className="dark:text-white">
+    <div className="dark:text-white page-transition">
 
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
@@ -94,19 +94,19 @@ const Transactions = () => {
             Manage and explore your transactions
           </p>
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 flex-wrap justify-end">
           <button
             onClick={exportCSV}
-            className="bg-green-500 hover:bg-green-600 text-white text-sm px-4 py-2 rounded-lg transition-all"
+            className="bg-green-500 hover:bg-green-600 text-white text-xs md:text-sm px-2 md:px-4 py-1.5 md:py-2 rounded-lg transition-all"
           >
-            📥 Export CSV
+            📥 CSV
           </button>
           {role === "admin" && (
             <button
               onClick={() => setShowForm(!showForm)}
-              className="bg-blue-500 hover:bg-blue-600 text-white text-sm px-4 py-2 rounded-lg transition-all"
+              className="bg-blue-500 hover:bg-blue-600 text-white text-xs md:text-sm px-2 md:px-4 py-1.5 md:py-2 rounded-lg transition-all"
             >
-              + Add Transaction
+              + Add
             </button>
           )}
         </div>
@@ -262,32 +262,31 @@ const Transactions = () => {
           filtered.map((txn) => (
             <div
               key={txn.id}
-              className="flex items-center justify-between px-5 py-4 border-b border-gray-50 dark:border-gray-700 last:border-0 hover:bg-gray-50 dark:hover:bg-gray-700 transition-all"
+              className="flex items-center justify-between px-3 md:px-5 py-4 border-b border-gray-50 dark:border-gray-700 last:border-0 hover:bg-gray-50 dark:hover:bg-gray-700 transition-all"
             >
-              <div className="flex items-center gap-4">
-                <div className={`w-10 h-10 rounded-full flex items-center justify-center text-lg ${
+              <div className="flex items-center gap-2 md:gap-4 flex-1 min-w-0">
+                <div className={`w-8 h-8 md:w-10 md:h-10 rounded-full flex-shrink-0 flex items-center justify-center text-base md:text-lg ${
                   txn.type === "income" ? "bg-green-50" : "bg-red-50"
                 }`}>
                   {txn.type === "income" ? "💰" : "💸"}
                 </div>
-                <div>
-                  <p className="text-sm font-medium text-gray-700 dark:text-gray-200">
+                <div className="min-w-0">
+                  <p className="text-xs md:text-sm font-medium text-gray-700 dark:text-gray-200 truncate">
                     {txn.name}
                   </p>
-                  <p className="text-xs text-gray-400">
+                  <p className="text-xs text-gray-400 truncate">
                     {txn.category} • {txn.date}
                   </p>
                 </div>
               </div>
-              <div className="flex items-center gap-3">
-                <span className={`text-xs px-2 py-1 rounded-full ${
+              <div className="flex items-center gap-1 md:gap-3 flex-shrink-0">
+                <span className={`text-xs px-1.5 py-0.5 rounded-full ${
                   txn.type === "income"
                     ? "bg-green-50 text-green-600"
                     : "bg-red-50 text-red-400"
                 }`}>
-                  {txn.type}
-                </span>
-                <span className={`text-sm font-semibold ${
+                  {txn.type === "income" ? "inc" : "exp"}
+                </span>                <span className={`text-xs md:text-sm font-semibold ${
                   txn.type === "income" ? "text-green-500" : "text-red-400"
                 }`}>
                   {txn.type === "income" ? "+" : "-"}₹{txn.amount.toLocaleString()}
@@ -295,9 +294,9 @@ const Transactions = () => {
                 {role === "admin" && (
                   <button
                     onClick={() => handleEdit(txn)}
-                    className="text-xs bg-blue-50 hover:bg-blue-100 text-blue-500 px-3 py-1 rounded-lg transition-all"
+                    className="text-xs bg-blue-50 hover:bg-blue-100 text-blue-500 px-2 py-1 rounded-lg transition-all flex-shrink-0"
                   >
-                    ✏️ Edit
+                    ✏️
                   </button>
                 )}
               </div>

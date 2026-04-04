@@ -1,111 +1,130 @@
 # Zorvyn Finance Dashboard
 
-A clean, interactive, and fully responsive Finance Dashboard built for the Zorvyn Fintech Frontend Developer assignment. Features role-based access, real-time charts, transaction management, and spending insights — all with a polished dark mode UI.
+A clean, interactive, and fully responsive Finance Dashboard built for the Zorvyn Fintech Frontend Developer assignment.
 
 ## Live Demo
 
-https://zorvyn-finance-dashboard-sepia.vercel.app
+🌐 [View Live App](https://zorvyn-finance-dashboard-sepia.vercel.app)
 
+## GitHub Repository
+
+📁 [View Source Code](https://github.com/hars8/zorvyn-finance-dashboard)
+
+## Screenshots
+
+
+
+## Tech Stack
+
+- **React + Vite** — Fast and modern frontend setup
+- **Tailwind CSS** — Clean and responsive styling
+- **Recharts** — Interactive charts and visualizations
+- **React Router DOM** — Page navigation and routing
+- **React Context API** — Global state management
 
 
 ## Features
 
-- **Dashboard** — Summary cards, interactive bar chart and pie chart for financial overview
-- **Transactions** — Full transaction list with search, filter by category, and sort by date/amount
-- **Role-Based UI** — Admin users can add and edit transactions; Viewer role is read-only
-- **Insights** — Spending analysis with category breakdowns and smart saving tips
-- **Dark Mode** — Toggle between light and dark themes, persisted across sessions
-- **Responsive Design** — Works seamlessly on desktop, tablet, and mobile
+### Core Features
+- **Dashboard Overview** — Summary cards showing Total Balance, Income and Expenses with time based bar chart and categorical pie chart
+- **Transactions Page** — Full list of transactions with search, filter by type and sort by date or amount
+- **Role Based UI** — Admin can add and edit transactions, Viewer can only view data. Switch roles using the dropdown in sidebar
+- **Insights Page** — Highest spending category, monthly comparison, savings rate, transaction summary and smart tips
 
----
+### Bonus Features
+- **Dark Mode** — Toggle between light and dark theme
+- **localStorage** — Data persists after page refresh
+- **Mock API** — Simulates real API call with 500ms loading delay
+- **CSV Export** — Download all transactions as a CSV file
+- **Loading Spinner** — Shows while data is being fetched
+- **Page Transitions** — Smooth fade in animation on page change
+- **Mobile Responsive** — Hamburger menu and optimized layout for all screen sizes
 
-## Tech Stack
-
-| Technology | Purpose |
-|---|---|
-| React + Vite | Frontend framework and build tool |
-| Tailwind CSS | Utility-first styling |
-| Recharts | Bar and pie chart visualizations |
-| React Router DOM | Client-side routing |
-| React Context API | Global state management |
-
----
 
 ## Getting Started
 
 ### Prerequisites
-
-Make sure you have **Node.js v18+** and **npm** installed.
+Make sure you have these installed:
+- Node.js v18 or above
+- npm v9 or above
 
 ### Installation
 
-```bash
+1. Clone the repository
+bash
+git clone https://github.com/hars8/zorvyn-finance-dashboard.git
+
+
+2. Go into the project folder
+bash
+cd zorvyn-finance-dashboard
+
+
+3. Install dependencies
+bash
 npm install
 
+4. Start the development server
 
-### Run the development server
-
-```bash
 npm run dev
 
 
-### Open in browser
+5. Open in browser
 
-```
 http://localhost:5173
-
-
-### Build for production
-
-```bash
-npm run build
-
 
 
 ## Project Structure
 
 src/
-├── components/       → Reusable UI components (Sidebar, Cards, Charts)
-├── context/          → AppContext — global state for transactions, theme, and role
-├── data/             → Mock transaction data (JSON)
+├── components/
+│   └── Sidebar.jsx          → Navigation sidebar with role switcher and dark mode
+├── context/
+│   └── AppContext.jsx        → Global state — transactions, role, dark mode, filters
+├── data/
+│   └── mockData.js           → Mock transaction data and monthly chart data
 ├── pages/
-│   ├── Dashboard.jsx → Overview with summary cards and charts
-│   ├── Transactions.jsx → Transaction list with search, filter, sort
-│   └── Insights.jsx  → Spending analysis and smart tips
-└── App.jsx           → Root component with routing and layout
+│   ├── Dashboard.jsx         → Overview with summary cards and charts
+│   ├── Transactions.jsx      → Transaction list with search, filter, sort, add, edit
+│   └── Insights.jsx          → Spending insights and smart tips
+├── App.jsx                   → Main app with routing and loading spinner
+├── main.jsx                  → React entry point
+└── index.css                 → Tailwind CSS setup and animations
 
 
-## Role-Based Access
+## How Role Based UI Works
+
+The app simulates role based access control on the frontend:
 
 | Feature | Admin | Viewer |
 |---|---|---|
-| View Dashboard | Yes | Yes |
-| View Transactions | Yes | Yes |
-| Add Transaction | Yes | No |
-| Edit Transaction | Yes | No |
-| View Insights | Yes | Yes |
+| View Dashboard | ✅ | ✅ |
+| View Transactions | ✅ | ✅ |
+| Add Transaction | ✅ | ❌ |
+| Edit Transaction | ✅ | ❌ |
+| Export CSV | ✅ | ✅ |
+| View Insights | ✅ | ✅ |
+| Dark Mode | ✅ | ✅ |
 
-You can switch roles from the sidebar or settings panel to preview both experiences.
+Switch roles using the dropdown in the sidebar — the UI updates instantly!
 
-## React + Vite Setup
 
-This project was bootstrapped with the official Vite React template.
+## State Management Approach
 
-Two official React plugins are available for Vite:
+Used **React Context API** to manage:
+- All transactions data
+- Current role (admin or viewer)
+- Dark mode preference
+- Search and filter state
+- Loading state for mock API
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) — uses [Oxc](https://oxc.rs) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) — uses [SWC](https://swc.rs/) for Fast Refresh
+All state is also persisted to **localStorage** so data survives page refreshes.
 
-This project uses `@vitejs/plugin-react`.
 
-### React Compiler
+## Assumptions Made
 
-The React Compiler is not enabled in this template due to its impact on dev and build performance. To enable it, follow the [official React Compiler installation guide](https://react.dev/learn/react-compiler/installation).
+- All data is mock/static — no real backend
+- Currency is Indian Rupee (₹)
+- Mock API simulates a 500ms network delay on first load
+- Role switching is for demonstration purposes only
 
-### ESLint Configuration
-
-For production applications, it is recommended to use TypeScript with type-aware lint rules. See the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for integrating TypeScript and [`typescript-eslint`](https://typescript-eslint.io).
-
-## License
-
-This project was built as part of the Zorvyn Fintech Frontend Developer assignment.
