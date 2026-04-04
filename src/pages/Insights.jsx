@@ -149,15 +149,15 @@ const Insights = () => {
         </h3>
         <ul className="space-y-2">
           <li className="text-sm text-blue-600 dark:text-blue-200">
-            • Your highest spending is on {highestCategory.name} —
+            • Your highest spending is on {highestCategory.name} -
             try setting a monthly budget for it!
           </li>
           <li className="text-sm text-blue-600 dark:text-blue-200">
-            • You are saving {savingsRate}% of your income —
+            • You are saving {savingsRate}% of your income -
             {savingsRate > 20 ? " great job! Keep it up! 🎉" : " try to save at least 20%!"}
           </li>
           <li className="text-sm text-blue-600 dark:text-blue-200">
-            • You have {expenseTransactions} expense transactions —
+            • You have {expenseTransactions} expense transactions -
             review them regularly to find unnecessary spending!
           </li>
         </ul>

@@ -285,7 +285,7 @@ const Transactions = () => {
                     ? "bg-green-50 text-green-600"
                     : "bg-red-50 text-red-400"
                 }`}>
-                  {txn.type === "income" ? "inc" : "exp"}
+                  {txn.type === "income" ? "income" : "expense"}
                 </span>                <span className={`text-xs md:text-sm font-semibold ${
                   txn.type === "income" ? "text-green-500" : "text-red-400"
                 }`}>
@@ -296,7 +296,7 @@ const Transactions = () => {
                     onClick={() => handleEdit(txn)}
                     className="text-xs bg-blue-50 hover:bg-blue-100 text-blue-500 px-2 py-1 rounded-lg transition-all flex-shrink-0"
                   >
-                    ✏️
+                    Edit✏️
                   </button>
                 )}
               </div>
